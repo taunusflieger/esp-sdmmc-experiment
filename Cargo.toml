@@ -1,0 +1,33 @@
+[package]
+name = "esp-sdmmc"
+version = "0.1.0"
+authors = ["Michael Zill <michael.zill@gmail.com>"]
+edition = "2021"
+resolver = "2"
+
+[profile.release]
+opt-level = "s"
+
+[profile.dev]
+debug = true    # Symbols are nice and they don't increase the size on Flash
+opt-level = "z"
+
+[features]
+
+
+[dependencies]
+
+heapless = "0.7"
+embedded-hal = { git = "https://github.com/rust-embedded/embedded-hal", tag = "v1.0.0-alpha.9" }
+embedded-svc = { verion = "0.23", features = ["nightly", "experimental"] }
+esp-idf-sys = { version = "0.31.12", features = ["binstart"] }
+esp-idf-svc = { version = "0.43", features = ["nightly", "experimental"] }
+esp-idf-hal = { version = "0.39", features = [] }
+anyhow = "1.0"
+embedded-sdmmc = { git = "https://github.com/rust-embedded-community/embedded-sdmmc-rs.git" }
+log = { version = "0.4.17" }
+
+
+[build-dependencies]
+embuild = "0.30.4"
+anyhow = "1"
