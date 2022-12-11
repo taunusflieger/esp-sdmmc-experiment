@@ -1,19 +1,12 @@
-use core::fmt::Debug;
-use core::mem;
 use embedded_sdmmc::*;
-use esp_idf_hal::delay;
 use esp_idf_hal::gpio::*;
-use esp_idf_hal::peripheral::Peripheral;
 use esp_idf_hal::prelude::*;
 use esp_idf_hal::spi::config::Duplex;
 use esp_idf_hal::spi::*;
-use esp_idf_sys as _;
-use esp_idf_sys::build_time::build_time_local;
-// If using the `binstart` feature of `esp-idf-sys`, always keep this module imported
 use esp_idf_svc::log::EspLogger;
-
+use esp_idf_sys as _;
+use log::info;
 use log::LevelFilter;
-use log::{debug, info, trace, warn};
 use std::rc::Rc;
 
 static LOGGER: EspLogger = EspLogger;
@@ -48,10 +41,10 @@ fn main() {
 
     let mut spi_config = SpiConfig::new();
     spi_config.duplex = Duplex::Full;
-    spi_config.baudrate(24.MHz().into());
-    let mut spi = SpiDeviceDriver::new(driver, Option::<Gpio10>::None, &spi_config).unwrap();
+    let _ = spi_config.baudrate(24.MHz().into());
+    let spi = SpiDeviceDriver::new(driver, Option::<Gpio10>::None, &spi_config).unwrap();
 
-    let mut sdmmc_cs = PinDriver::output(peripherals.pins.gpio10).unwrap();
+    let sdmmc_cs = PinDriver::output(peripherals.pins.gpio10).unwrap();
 
     let mut sdmmc_spi = embedded_sdmmc::SdMmcSpi::new(spi, sdmmc_cs);
     for _ in 0..9 {
