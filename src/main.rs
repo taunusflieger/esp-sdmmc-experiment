@@ -38,9 +38,9 @@ fn main() {
     let driver = std::rc::Rc::new(
         SpiDriver::new(
             peripherals.spi2,
-            peripherals.pins.gpio36,
-            peripherals.pins.gpio35,
-            Some(peripherals.pins.gpio37),
+            peripherals.pins.gpio36,       // SCK
+            peripherals.pins.gpio35,       // MOSI
+            Some(peripherals.pins.gpio37), // MISO
             Dma::Disabled,
         )
         .unwrap(),
