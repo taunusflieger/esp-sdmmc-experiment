@@ -33,6 +33,8 @@ fn main() {
 
     let peripherals = Peripherals::take().unwrap();
 
+    // Note: Rc is not required here, but I tested it here as I require it
+    // in the target context
     let driver = std::rc::Rc::new(
         SpiDriver::new(
             peripherals.spi2,
